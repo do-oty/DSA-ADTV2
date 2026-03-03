@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 
-#define MAX 5
+#define MAX 10
 
 
 typedef struct {
@@ -37,9 +37,9 @@ int isEmpty(Queue G){
 
 int isFull(Queue G){
     //counterclockwise chceck
-    return ((G.rear - 1 + MAX) % MAX) == G.front ? 1 : 0;
+    return G.front == (G.rear - 2 + MAX) % MAX ? 1 : 0;
     //clockwise
-    //return ((G.rear + 1) % MAX ) == G.front ? 1 : 0;
+    //return ((G.rear + 2) % MAX ) == G.front ? 1 : 0;
  }
 
 void enq(Queue *G, Person H){

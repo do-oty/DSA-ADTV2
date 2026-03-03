@@ -30,10 +30,8 @@ int isEmpty(Stack *S){
 }
 
 Website peek(Stack *S){
-    Website dummy = {"", 0, 0, 0};
     if(isEmpty(S)){
         printf("Stack is empty!\n");
-        return dummy;
     }
     return S->w[S->top];
 }
@@ -47,12 +45,32 @@ void push(Stack *S, Website site){
 }
 
 Website pop(Stack *S){
-    Website dummy = {"", 0, 0, 0};
+   
     if(isEmpty(S)){
         printf("Stack is empty!\n");
-        return dummy;
     } else {
         return S->w[S->top--];
+    }
+}
+
+void display(Stack *S){
+    if(isEmpty(S)){
+        printf("Stack is empty\n");
+    } else{
+        Stack *tempS = init();
+
+        while(!isEmpty(S)){
+            Website w = pop(S);
+            printf("%s %d %d %d\n", w.websiteName, w.websiteYear, w.timeAccessed, w.SFW);
+            push(tempS, w);
+        }
+
+        while(!isEmpty(tempS)){
+            Website w = pop(tempS);
+            push(S, w);
+        }
+
+        free(tempS);
     }
 }
 
@@ -94,13 +112,18 @@ int main (){
     Website w2 = {"site2", 2005, 3, 0};
     Website w3 = {"site3", 2010, 10, 1};
 
-    /* assumes push, pop, peek, isEmpty are implemented elsewhere */
 
     push(S, w1);
     push(S, w2);
     push(S, w3);
 
+    printf("Stack before delNSFW:\n");
+    display(S);
+
     delNSFW(S);
+
+    printf("Stack after delNSFW:\n");
+    display(S);
 
     return 0;
 }

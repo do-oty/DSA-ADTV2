@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/kyle_zenarosa/Code/LL STACK",
-      "program": "c:/Users/kyle_zenarosa/Code/LL STACK/build/Debug/outDebug",
+      "cwd": "c:/Users/kyle_zenarosa/Code/ADTLIST/QUIZ",
+      "program": "c:/Users/kyle_zenarosa/Code/ADTLIST/QUIZ/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
