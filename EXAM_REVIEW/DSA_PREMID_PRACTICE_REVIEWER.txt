@@ -1,0 +1,196 @@
+DSA PREMID PRACTICE REVIEWER (Similar Style)
+
+Instructions: Answer all items. Follow any “no spaces” note if given.
+
+============================================================
+
+Part 1 — Cursor-based List (box[] and next[])
+
+Notes:
+- Each list node is a pair (box[x], next[x])
+- next[0] holds the index of the first element
+- The index x with next[x] == 0 indicates the last element
+
+Given:
+
+index x | box[x] | next[x]
+--------+--------+--------
+0       |   —    | 1
+1       |   A    | 4
+4       |   B    | 7
+7       |   C    | 2
+2       |   D    | 9
+9       |   E    | 0
+
+1) What is the second element of the list?
+
+A->B->C->D->E->NULL
+
+B
+
+2) What is the middle element of the list?
+C
+
+3) A new node is placed at index 6 with value X. If X is inserted between the 3rd and 4th elements, what is the value stored in next[6]?
+
+2
+
+4) After inserting X (index 6) between the 3rd and 4th elements, what is the new value stored in next[7]?
+
+6
+
+
+
+============================================================
+
+Part 2 — Stack and Queue Procedure Tracing
+
+The stack and queue are initially empty.
+
+Operations:
+- push(x): Put value x in the stack.
+- pop(): Retrieve the value from the stack.
+- enq(x): Put value x in the queue.
+- deq(): Retrieve the value from the queue.
+
+6) When the procedure below is executed in order, what is stored in variable y?
+
+Procedure:
+- enq(1)
+- enq(3)
+- push(5)
+- push(deq())
+- enq(7)
+- push(deq())
+- y ← pop()
+
+Q  7
+S 5 1 
+Y 3
+
+3
+7) When the procedure below is executed in order, what is stored in variable y?
+
+Procedure:
+- enq(10)
+- push(20)
+- enq(30)
+- push(deq())
+- push(deq())
+- y ← pop()
+
+
+Q 
+S 20 10 
+Y 30
+
+30
+============================================================
+
+Part 3 — Stack of Uppercase Letters (Array-based)
+
+Stack grows from index 1 to SIZE - 1. Index 0 holds the index of the top element.
+
+Datatype Definition:
+
+    #define SIZE 0XA
+    typedef unsigned char elemType;
+    typedef elemType Stack[SIZE];
+    typedef enum {TRUE, FALSE} boolean;
+
+8) Write the function header (use user-defined types only).
+   Function pushStk() — pushes a given element to the given stack.
+
+    void pushStk(Stack S, elemType x);
+
+
+9) Fill in the blank with the appropriate statement to partially complete the code.
+   Note: Do not put a space in your answer.
+
+    // topStk() – returns the top element of the given stack if stack is not empty.
+    // If empty, return '*'.
+    elemType topStk(Stack S)
+    {
+        ________________________
+    }
+
+    return S[0] > 0 ? S[S[0]] : '*' ;
+
+
+10) Fill in the blank with the appropriate statement to partially complete the code.
+    Note: Do not put a space in your answer.
+
+    // pushStk() – pushes a given element to the given the stack
+    void pushStk(Stack S, elemType A)
+    {
+        if ( ___________ ) {
+            // Statement
+        } else {
+            printf("\\nStack is FULL");
+        }
+    }
+
+    S[0] < SIZE -1
+
+11) Fill in the blank with the appropriate statement to partially complete the code.
+    Note: Do not put a space in your answer.
+
+    // popStk() – removes the top element of the given stack.
+    void popStk(Stack S)
+    {
+        if ( ___________ ) {
+            // Statement
+        } else {
+            printf("\\nStack is Empty");
+        }
+    }
+      S[0]  > 0
+12) Fill in the blank with the appropriate statement to partially complete the code.
+    Note: Do not put a space in your answer.
+
+    // popStk() – removes the top element of the given stack.
+    void popStk(Stack S)
+    {
+        if ( Condition ) {
+            _________________
+        } else {
+            printf("\\nStack is Empty");
+        }
+    }
+     S[0]--;
+13) Fill in the blank with the appropriate statement to partially complete the code.
+    Note: Do not put a space in your answer.
+
+    // pushStk() – pushes a given element to the given the stack.
+    void pushStk(Stack S, elemType A)
+    {
+        if ( Condition ) {
+            ________________
+        } else {
+            printf("\\nStack is FULL");
+        }
+    }
+        S[++S[0]] = A;
+============================================================
+
+ANSWER KEY (Don’t read until you’re done)
+
+Part 1
+1) B
+2) C
+3) 2
+4) 6
+5) 8
+
+Part 2
+6) 3
+7) 30
+
+Part 3
+8) void pushStk(Stack S,elemType A);
+9) return(S[0]==0)?'*':S[S[0]];
+10) S[0]<SIZE-1
+11) S[0]!=0
+12) S[0]--;
+13) S[++S[0]]=A;
+

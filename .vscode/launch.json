@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/kyle_zenarosa/Code/ADTLIST/QUIZ",
-      "program": "c:/Users/kyle_zenarosa/Code/ADTLIST/QUIZ/build/Debug/outDebug",
+      "cwd": "c:/Users/kyle_zenarosa/Code/ADTLIST/ARRAY_LIST",
+      "program": "c:/Users/kyle_zenarosa/Code/ADTLIST/ARRAY_LIST/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

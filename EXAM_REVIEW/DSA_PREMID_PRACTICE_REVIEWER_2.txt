@@ -1,0 +1,262 @@
+DSA PREMID PRACTICE REVIEWER 2 (NEW SET)
+
+Topics: stacks, queues, cursor-based lists/queues, linked lists, array vs pointer lists, time complexity.
+
+Instructions:
+- Answer directly on paper or in a separate file.
+- For code fill-ins, follow any “no spaces” rule if stated.
+
+============================================================
+
+PART 1 – ARRAY STACK & STACK LOGIC
+
+Assume this array-based stack of integers:
+
+    #define MAX 10
+    typedef int ElemType;
+    typedef struct {
+        ElemType data[MAX];
+        int top;          // index of top element, -1 when empty
+    } IntStack;
+
+1) The stack is initially empty. Write the values of `top` after each operation below.
+
+    IntStack S;
+    S.top = -1;
+
+    push(3);      // pushes 3
+    push(5);      // pushes 5
+    pop();        // pops one element
+    push(9);      // pushes 9
+
+
+
+
+Give the sequence of `top` values after each of the four operations (separated by commas).
+0,1,0,1
+
+2) Write the function header (using only user-defined types) for a function that pushes an element:
+
+    Function name: pushInt
+    Parameters: address of a stack, and an element to push
+
+    void pushInt(Stack *S, elemType a);
+
+3) Fill in the missing condition for a function that tests if the stack is full (no spaces required):
+
+    boolean isFull(IntStack *S)
+    {
+        return ___________;
+    }
+
+    returnS->top==MAX-1;
+
+4) Fill in the blank to complete a `peek` function that returns the top element or -1 if empty (no spaces required):
+
+    int peekInt(IntStack *S)
+    {
+        return (S->top==-1) ? -1 : ____________________;
+    }
+    S->data[S->top]
+============================================================
+
+PART 2 – QUEUE TRACING (ARRAY QUEUE)
+
+Assume a simple array-based queue of integers with front index `F` and rear index `R` (no circular wrap-around, and we assume there is enough space):
+
+    // initially: F = 0; R = -1;
+    // ENQ(x): R++; A[R] = x;
+    // DEQ(): returns A[F]; F++;
+
+5) Simulate the following sequence of operations and give:
+   (a) the final contents of the queue from front to rear, and
+   (b) the final values of F and R.
+
+    ENQ 4
+    ENQ 1
+    ENQ 7
+    DEQ
+    ENQ 3
+    ENQ 9
+    DEQ
+i dont get tihs 
+6) True or False: In this non-circular array queue, after many ENQ and DEQ operations, there may be unused cells at the beginning of the array that can no longer be used without shifting elements.
+False even if it was circular it would be replaced.
+============================================================
+
+PART 3 – CURSOR-BASED LIST BASICS
+
+A list is stored using this virtual heap:
+
+    #define VH_MAX 20
+
+    typedef struct {
+        char elem;
+        int link;     // index of next node, -1 if none
+    } VHNode;
+
+    typedef struct {
+        VHNode nodes[VH_MAX];
+        int availList;    // index of first available node
+    } VHeap;
+
+    typedef int CursorList;  // index of first node, -1 if empty
+
+7) Which segment of memory typically stores the `VHeap` variable when declared as a local variable inside `main`? (choose one)
+   a) Code segment
+   b) Stack (activation record)
+   c) Heap (dynamic memory)
+   d) Register
+
+b
+
+8) Cursor-based list removal:
+
+Complete the body of `removeFirst()` that removes the first node of a cursor-based list `L` and returns its `elem`. If list is empty, return `'?'`.
+
+    char removeFirst(CursorList *L, VHeap *vh)
+    {
+        char ch = '?';
+        int ndx;
+
+        if (*L != -1) {
+            ndx = *L;
+            ch = vh->nodes[ndx].elem;
+            *L = vh->nodes[ndx].link;
+
+            // return ndx to avail list
+            vh->nodes[ndx].link = ____________;
+            vh->availList = ____________;
+        }
+        return ch;
+    }
+
+Fill in the two blanks with expressions using `vh`, `ndx` and `availList` (no spaces required).
+ndx,availList
+============================================================
+
+PART 4 – CURSOR-BASED QUEUE
+
+A queue is implemented using a virtual heap and indices:
+
+    typedef struct {
+        VHNode VSpace[VH_MAX];
+        int availList;
+    } VQueueHeap;
+
+    typedef struct {
+        int start;       // index of front node, -1 if empty
+        int end;         // index of rear node, -1 if empty
+        int cnt;         // number of elements
+        VQueueHeap *vh;  // pointer to shared virtual heap
+    } CQueue;
+
+9) For an initially empty `CQueue Q`, give reasonable initial values for:
+   - `Q.start = ______`
+   - `Q.end = ______`
+   - `Q.cnt = ______`
+
+   -1
+   -1
+   0
+
+10) Consider a successful `enQueue` operation that inserts a new node index `ndx` into a **non-empty** queue `Q`. Fill in the statement that correctly links this new node at the rear (no spaces required), assuming `Q.end` currently holds the index of the old rear node:
+
+    // inside enQueue, non-empty case:
+    Q->VSpace[Q->end].link = ____________;
+
+Q->VSpace[Q->end].link=Q->VSpace[Q->availList];
+
+11) Right after linking in Q10, what should `Q->end` be updated to (no spaces required)?
+
+    Q->end = ____________;
+Q->end=Q->VSpace[Q->availList];
+============================================================
+
+PART 5 – LINKED LIST LOGIC & RECURSION
+
+Assume:
+
+    typedef struct node {
+        int data;
+        struct node *link;
+    } *List;
+
+12) Which of the following statements is TRUE for this `List`?
+   a) The variable of type `List` is stored in heap memory by definition.  
+   b) Each node contains a pointer to the previous node.  
+   c) Elements cannot be accessed in constant time by index.  
+   d) Deleting the first node requires shifting all later data one position left.
+
+c
+13) Consider this recursive function:
+
+    void printEveryOther(List L)
+    {
+        if (L != NULL) {
+            printf("%d ", L->data);
+            if (L->link != NULL) {
+                printEveryOther(L->link->link);
+            }
+        }
+    }
+
+If the list contains the elements `5, 4, 3, 2, 1` in that order, what is printed?
+
+5 3 1
+============================================================
+
+PART 6 – ARRAY VS POINTER IMPLEMENTATIONS & COMPLEXITY
+
+14) In an array-based list with capacity `MAX` and current size `N` (`N <= MAX`), which statement is TRUE?
+   a) Removing the first element is always \(O(1)\).  
+   b) There might be unused capacity even when the list is "full" logically.  
+   c) Inserting at the end always requires shifting all existing elements.  
+   d) The logical order and the physical order of elements may differ.
+
+i dont get whats the connection of the n and max elements
+
+b
+
+15) In a linked list, what is the time complexity of finding the element at position `k` (1-based index), in the worst case?
+   a) \(O(1)\)  
+   b) \(O(k)\)  
+   c) \(O(\log k)\)  
+   d) \(O(N^2)\)
+
+   b
+
+16) In a circular queue implemented using an array and two indices `front` and `rear` (with wrap-around using modulo), which pair of operations can both be implemented in \(O(1)\) time?
+   a) ENQUEUE and DEQUEUE  
+   b) ENQUEUE and SEARCH  
+   c) DEQUEUE and SEARCH  
+   d) SEARCH and DELETE-ARBITRARY
+
+    a
+
+============================================================
+
+ANSWER KEY (Check after answering)
+
+1) top sequence: 0, 1, 0, 1   (starting from -1 and assuming push/pop adjust top by +1/-1)  
+2) void pushInt(IntStack *S,ElemType x);  
+3) S->top==MAX-1  
+4) S->data[S->top]  
+
+5) Queue contents: 7,3,9   and F=2, R=4  
+6) True  
+
+7) b  
+8) vh->availList,ndx  
+
+9) start=-1, end=-1, cnt=0  
+10) ndx  
+11) ndx  
+
+12) c  
+13) 5 3 1  
+
+14) b  
+15) b  
+16) a
+
