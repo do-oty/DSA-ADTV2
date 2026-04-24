@@ -1,0 +1,142 @@
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+// Enum for status
+typedef enum {
+STATUS_ACTIVE,
+STATUS_INACTIVE,
+STATUS_SUSPENDED
+} Status;
+
+// Nested struct for date
+typedef struct {
+int day;
+int month;
+int year;
+} Date;
+
+// Struct for address
+typedef struct {
+char street[100];
+char city[50];
+char zip[10];
+} Address;
+
+// Union for different ID types
+typedef union {
+int national_id;
+char passport[20];
+} ID;
+
+// Project node (linked list)
+typedef struct Project {
+int project_id;
+char project_name[100];
+struct Project *next;
+} Project;
+
+// Main Employee struct
+typedef struct Employee {
+int id;
+char name[100];
+Status status;
+
+Date hire_date;
+Address address;
+ID id_info;
+
+Project *projects; // head of linked list
+
+} Employee;
+
+Answer first by yourself then look at the answer sheet on page 10. Remember to read
+everything.
+
+1. Draw the structure definition of Employee (up to you) 
+//created it in excalidraw
+2. Set the name of the employee to &quot;Alice&quot; and status to &quot;STATUS_ACTIVE&quot;
+
+Employee emp;
+
+strcpy(emp.name, "Alice");
+emp.status = 0;
+
+3. Set the hire date to March 15, 2022
+emp.hire_date.day = 15;
+emp.hire_date.month = 3;
+emp.hire_date.year = 2022;
+
+4. Set the city to &quot;Quezon City&quot
+strcpy(emp.address.city, "Quezon City");
+
+5. Set the national ID to 123456789
+emp.id_info.national_id = 12345789;
+
+6. What will happen if you later store a passport?
+overwritten
+
+
+7. Create and initialize a new project named &quot;AI System&quot; with id 101
+
+Project *newNode = malloc(sizeof(Project));
+
+strcpy(newNode->project_name, "AI SYSTEM");
+newNode->project_id = 101;
+newNode->next = NULL;
+
+
+8. Code snippet to count the number of projects assigned to Employee e
+int i = 0
+for(Project *trav =  e.projects ;  trav != NULL ; trav = trav->next , i++);
+return i;
+
+9. Given Employee emp1 and Employee emp2, write code to copy the name from emp1 to
+emp2
+
+strcpy(emp2.name,emp1.name);
+
+
+10. Copy the entire address from emp1 to emp2 using memcpy
+
+memcpy(&emp2.address,&emp1.address, sizeof(emp1.address));
+
+11. Print the day, month, and year of emp.hire_date where emp is declared Employee *emp
+
+printf(" %d / %d / %d ", emp->hire_date.day, 
+    emp->hire_date.month,
+    emp->hire_date.year);
+
+
+
+12. Create a new Project node and copy the first data from an existing project.
+
+Project *newNode = malloc(sizeof(Project));
+
+newNode = existingNode;
+newNode->next = NULL;
+
+
+
+13. What happens with Employee emp2 = emp1?
+emp2 will have the same exact contents with emp1 apart from address;
+
+14. Is there a bug and if yes, add a fix:
+Project *p;
+p-&gt;project_id = 10;
+
+
+yes , node is not properly created it needs to be Project *p = malloc(sizeof(Project));
+
+
+15. What will happen with the code snippet below:
+
+
+free(emp.projects);
+
+it will free the head of projects other nodes unaffected;
+
+
+16. What happens if you forget to free the list?
+
+memory allocated will stay allocated until execution is finished;

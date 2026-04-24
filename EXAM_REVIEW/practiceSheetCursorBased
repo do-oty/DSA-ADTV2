@@ -1,0 +1,364 @@
+DSA MIXED PRACTICE REVIEWER (PRE-MID STYLE)
+
+Topics: ADT, arrays, linked list, cursor-based list, stack, queue.
+
+Instructions:
+- Answer first by yourself.
+- Some items are "fill in the blank" style.
+- If your teacher says "no spaces", follow that rule.
+
+============================================================
+
+PART 1 - ADT BASICS
+
+1) In your own words, what is an ADT?
+
+an adt is usually a structure comprised of multiple datatypes primitive and user defined . it is a mix of datatypes collated into 
+one clean structure
+
+2) Which of these belong to ADT description?
+   a) Operations and expected behavior
+   b) Exact memory address layout only
+   c) Performance expectations of operations
+   d) Hardware brand used by programmer
+
+a b and c 
+
+
+3) Give one ADT example and two operations for it.
+   (Example format: Stack -> push, pop)
+
+QUEUE enq and deq
+
+
+
+4) True or False:
+   Different data structures can implement the same ADT.
+
+   True
+
+5) Explain in one sentence:
+   Difference between ADT and data structure.
+
+   an ADT refers to the concept while structure refers to the user define strucutres
+
+============================================================
+
+PART 2 - ARRAY-BASED LIST / ARRAY BASICS
+
+Assume:
+    #define MAX 10
+    typedef int ElemType;
+    typedef struct {
+        ElemType data[MAX];
+        int count;
+    } ArrList;
+
+6) What is the initial value of count for an empty list?
+
+it should be 0
+
+7) Fill in the blank (no spaces):
+   Is list full?
+   return ____________;
+
+return count == MAX -1 ? true: false;
+
+8) Fill in the blank (no spaces):
+   Is list empty?
+   return ____________;
+
+   return count == 0 ? true : false;
+9) In an unsorted array list, what is worst-case time complexity of searching for x?
+   a) O(1)
+   b) O(log n)
+   c) O(n)
+   d) O(n^2)
+
+   C 
+   a full traversal of a list
+
+10) Why does deleting at index 0 in an array list usually cost O(n)?
+
+u have to shift all elems to the left
+
+
+11) Write code snippet to insert x at end (assume not full).
+
+
+arrlist.data[arr.count] = x;
+
+
+
+12) Write code snippet to delete last element safely.
+
+arrlist.count--;
+
+
+============================================================
+
+PART 3 - SINGLY LINKED LIST (POINTER-BASED)
+
+Assume:
+    typedef struct node {
+        int data;
+        struct node *next;
+    } Node, *List;
+
+13) What should head be for an empty list?
+
+List *L = NULL;
+
+14) Write code to traverse and print all nodes.
+
+for(List *trav =*L ; trav-> next != NULL ; trav = trav->next ){
+    printf("%d", trav->data);
+}
+
+15) Write code to count nodes in a linked list.
+int i =0;
+for(List *trav =*L ; trav  != NULL; trav = trav->next, i++ );
+return i;
+
+16) Why is random access by index not O(1) in linked list?
+
+
+in LL u have to traverse to any point that is not the head;
+
+
+17) Bug fix:
+    Node *p;
+    p->data = 10;
+    What should be done first?
+
+    *p = malloc(sizeof(Node));
+
+
+18) What happens if you call free(head) on a multi-node list and stop there?
+
+all of the other ndes become unusable since we cannot traverse to them but they will still stay/exist;
+
+============================================================
+
+PART 4 - STACK (ARRAY IMPLEMENTATION)
+
+Assume:
+    #define SIZE 10
+    typedef int ElemType;
+    typedef struct {
+        ElemType data[SIZE];
+        int top;   // -1 means empty
+    } Stack;
+
+19) Initial top value for empty stack?
+
+Stack S;
+s.top = -1;
+
+
+20) Fill in the blank (no spaces):
+    push condition (not full):
+    ____________
+
+    if(s.top < SIZE )
+
+21) Fill in the blank (no spaces):
+    pop condition (not empty):
+    ____________
+
+    if(s->top != -1)
+    
+
+22) Fill in the blank (no spaces):
+    push statement:
+    ____________
+
+    s->data[++s->top] = elem;
+
+    
+
+
+23) Fill in the blank (no spaces):
+    pop statement:
+    ____________
+    int data=  s->data[s->top];
+    s->data[--s->top];
+
+
+24) What does peek return if stack is empty in your chosen implementation?
+    (state your convention, e.g., -1)
+
+    return s->top > -1 ? s->data[s->top] : -1;
+    -1
+
+25) Trace:
+    Start empty
+    push(5), push(8), pop(), push(2)
+    What is top element now?
+
+    5 8
+    5 2
+    
+    2
+
+
+============================================================
+
+PART 5 - QUEUE (ARRAY IMPLEMENTATION)
+
+Assume simple queue:
+    front = 0; rear = -1
+    ENQ(x): rear++; A[rear] = x;
+    DEQ():  returns A[front]; front++;
+
+
+
+26) Trace:
+    ENQ 4, ENQ 1, ENQ 9, DEQ, ENQ 3, DEQ
+    a) Final queue contents (front to rear)?
+     4 1 9 
+     1 9 3 
+     9 3
+
+
+     9 3 
+
+    
+    b) Final front and rear values?
+   Q->front == 9 
+   Q->rear == 3;
+
+
+27) True or False:
+    In non-circular array queue, wasted spaces can appear at the front.
+
+    yes both implementation actually; 
+    true;
+
+28) In circular queue, which operations are O(1)?
+   a) enqueue and dequeue
+   b) enqueue and search
+   c) dequeue and search
+   d) search and delete arbitrary
+
+    a
+
+
+29) Why do we need modulo when implementing circular queue?
+
+so that it will be constrained within the queue MAX space/ array space;
+
+============================================================
+
+PART 6 - CURSOR-BASED LIST
+
+Assume:
+    #define MAX 10
+    typedef struct {
+        int data;
+        int next;  // -1 means null
+    } Cell, HeapSpace[MAX];
+
+    typedef struct {
+        HeapSpace H;
+        int avail;
+    } VHeap;
+
+    typedef int List;
+
+30) In cursor-based list, what does -1 mean?
+
+31) Write init code:
+    - avail = 0
+    - H[i].next = i + 1
+    - last next = -1
+
+    void init(int *L , Vheap *VH){
+
+        for(int i = 0 ; i  < MAX ; i++){
+            VH->H[i].next = i+1;
+        }
+        VH->avail = 0;
+        VH->H[MAX-1].next = -1;
+    }
+
+
+
+32) Write allocSpace(VHeap *V) snippet.
+
+    int allocSpace(VHeap *VH){
+        int idx = VH->avail;
+
+        if(idx != -1){
+            VH->avail = VH->H[idx].next;
+        }
+        return idx;
+
+
+    }
+
+
+33) Write deallocSpace(VHeap *V, int idx) snippet.
+
+    void deallocSpace(VHeap *VH , int idx){
+
+        VH->H[idx].next = VH->avail;
+        VH->avail = idx;
+
+    }
+
+34) Insert at front:
+    Given idx is allocated and filled,
+    write code to insert idx at front of list L.
+
+    int idx = allocSpace(VH);
+
+    VH->H[idx].next = *L;
+    *L = idx;
+
+
+35) Traverse list L and print data values.
+
+    for(int trav = *L ; trav != -1 ; trav= VH->H[trav].next){
+        printf("%d", VH->H[trav].data);
+    }
+
+
+36) Bug fix:
+    int idx = V->avail;
+    V->avail = idx;
+    return idx;
+    (what is wrong and what should line 2 be?)
+
+    V->avail = V->H[idx].next;
+
+============================================================
+
+PART 7 - CURSOR-BASED QUEUE
+
+Assume queue metadata:
+    typedef struct {
+        int front;
+        int rear;
+    } Queue;
+
+37) Initial values of front and rear for empty queue?
+
+Q->front = 0;
+Q->rear = -1;
+
+38) In enqueue (non-empty), fill in:
+    V->H[Q->rear].next = ____________;
+    Q->rear = ____________;
+
+    i dont get this
+
+
+39) In dequeue, after moving front forward, when should rear become -1?
+
+im not sure wgat the question is but Q->rear is -1 if empty;
+40) Explain in one sentence:
+    Main difference between pointer-based linked list and cursor-based linked list.
+
+Cursor based uses int values to point to the next node and is created using a array; u traverse / acccess the array through the next variables it is only logically cursor based but it is actually just an array
+while a a pointer list uses a self referencing structure that uses pointer to access different nodes;
